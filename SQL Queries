@@ -1,0 +1,53 @@
+SQL query to calculate daily revenue in MySQL.
+
+mysql> select date(sales_date),sum(price*quantity) 
+from prices, sales 
+where prices.product=sales.product 
+group by date(sales_date);
+
+
+query to Calculate Month By Month Revenue in MySQL
+
+mysql> select month(sales_date),sum(price*quantity) 
+from prices, sales 
+where prices.product=sales.product 
+group by month(sales_date);
+
+If you want to display month names, use DATE_FORMAT function
+
+mysql> select date_format(sales_date,'%b'),sum(price*quantity) 
+from prices, sales 
+where prices.product=sales.product 
+group by date_format(sales_date,'%b');
+
+Query to Calculate Year By Year Revenue in MySQL
+
+mysql> select year(sales_date),sum(price*quantity) 
+from prices, sales 
+where prices.product=sales.product
+group by year(sales_date);
+
+Query to Calculate Revenue for Last 12 months in MySQL
+
+mysql> select month(sales_date),sum(price*quantity) 
+from prices, sales
+where prices.product=sales.product
+and sales_date > now() - INTERVAL 12 month 
+group by month(sale_date);
+
+query to Calculate Revenue for Last 3 months in MySQL
+
+mysql> select month(sales_date),sum(price*quantity) 
+from prices, sales
+where prices.product=sales.product
+and sales_date > now() - INTERVAL 3 month 
+group by month(sales_date);
+
+Query to Calculate Revenue for Current month in MySQL
+
+mysql> select month(sales_date),sum(price*quantity) 
+from prices, sales
+where prices.product=sales.product 
+and sales_date >= (LAST_DAY(NOW()) + INTERVAL 1 DAY - INTERVAL 1 MONTH) 
+and order_date < (LAST_DAY(NOW()) + INTERVAL 1 DAY) 
+group by month(sales_date);
